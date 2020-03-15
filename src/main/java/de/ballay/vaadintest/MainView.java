@@ -1,5 +1,9 @@
 package de.ballay.vaadintest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -9,7 +13,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import de.ballay.vaadintest.player.PlayerException;
+import de.ballay.vaadintest.player.RadioPlayer;
 
 /**
  * A sample Vaadin view class.
@@ -31,6 +37,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
 public class MainView extends VerticalLayout {
+	
+	private final static Logger logger = LoggerFactory.getLogger(MainView.class);
+	
+	@Autowired
+	private RadioPlayer radioPlayer;
 
     /**
      * Construct a new Vaadin view.
@@ -47,6 +58,22 @@ public class MainView extends VerticalLayout {
         // Button click listeners can be defined as lambda expressions
         Button button = new Button("Say hello",
                 e -> Notification.show(service.greet(textField.getValue())));
+        Button startButton = new Button("start radio",
+        		e -> {
+					try {
+						radioPlayer.startPlayer();
+					} catch (PlayerException ex) {
+						logger.error(ex.getMessage(), ex);
+					}
+				});
+        Button stopButton = new Button("stop radio",
+        		e -> {
+					try {
+						radioPlayer.stopPlayer();
+					} catch (PlayerException ex) {
+						logger.error(ex.getMessage(), ex);
+					}
+				});
 
         // Theme variants give you predefined extra styles for components.
         // Example: Primary button is more prominent look.
@@ -59,7 +86,7 @@ public class MainView extends VerticalLayout {
         // Use custom CSS classes to apply styling. This is defined in shared-styles.css.
         addClassName("centered-content");
 
-        add(textField, button);
+        add(textField, button, startButton, stopButton);
     }
 
 }
