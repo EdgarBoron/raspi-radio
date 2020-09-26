@@ -17,6 +17,19 @@ If you want to run the application locally in the production mode, run `mvn spri
 
 To run Integration Tests, execute `mvn verify -Pintegration-tests`.
 
+## Steps to prepare Raspberry PI having a hifiberry DAC installed
+
+[activate ssh](https://www.raspberrypi.org/documentation/remote-access/ssh/)
+
+[test sound output](https://www.hifiberry.com/build/documentation/playing-test-sounds/)
+
+[maybe set output to cinch](https://www.raspberrypi.org/documentation/configuration/audio-config.md)
+
+[Install Spotyfi Connect](https://github.com/dtcooper/raspotify) - not required for the radio but nice to have
+
+[Configure driver](https://support.hifiberry.com/hc/en-us/articles/205377651-Configuring-Linux-4-x-or-higher)
+
+
 ## More Information
 
 - [Vaadin Flow](https://vaadin.com/flow) documentation
